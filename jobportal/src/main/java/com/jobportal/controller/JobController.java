@@ -1,9 +1,8 @@
 package com.jobportal.controller;
 
 import com.jobportal.entity.Job;
-import com.jobportal.repository.JobRepository;
+import com.jobportal.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,55 +13,40 @@ import java.util.List;
 public class JobController {
 
     @Autowired
-    private JobRepository jobRepository;
+    private JobService jobService;
 
-    // ADD JOB
-    @PostMapping("/add")
+    @PostMapping
     public Job addJob(@RequestBody Job job) {
-
-        return jobRepository.save(job);
+        return jobService.saveJob(job);
     }
+
 
     // GET ALL JOBS
     @GetMapping
     public List<Job> getAllJobs() {
 
-        return jobRepository.findAll();
+        return jobService.getAllJobs();
     }
 
     // GET JOB BY ID
     @GetMapping("/{id}")
     public Job getJobById(@PathVariable Long id) {
-
-        return jobRepository.findById(id).orElse(null);
+        return jobService.getJobById(id);
     }
 
     // UPDATE JOB
     @PutMapping("/{id}")
-    public Job updateJob(@PathVariable Long id, @RequestBody Job job) {
-
-        Job existing = jobRepository.findById(id).orElse(null);
-
-        if (existing != null) {
-
-            existing.setTitle(job.getTitle());
-            existing.setCompany(job.getCompany());
-            existing.setLocation(job.getLocation());
-            existing.setSalary(job.getSalary());
-            existing.setDescription(job.getDescription());
-
-            return jobRepository.save(existing);
-        }
-
-        return null;
+    public Job updateJob(@PathVariable Long id,
+                         @RequestBody Job job) {
+        return jobService.updateJob(id, job);
     }
 
     // DELETE JOB
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteJob(@PathVariable Long id) {
+    public String deleteJob(@PathVariable Long id) {
 
-        jobRepository.deleteById(id);
+        jobService.deleteJob(id);
 
-        return ResponseEntity.ok("Job deleted successfully");
+        return "Job deleted successfully";
     }
 }

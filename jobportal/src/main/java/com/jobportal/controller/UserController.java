@@ -1,13 +1,11 @@
 package com.jobportal.controller;
 
 import com.jobportal.entity.User;
-import com.jobportal.repository.UserRepository;
+import com.jobportal.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -15,60 +13,45 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
+ // REGISTER USER
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
+    public User register(@RequestBody User user) {
+        System.out.println("🔥 CONTROLLER HIT");
 
-        return userRepository.save(user);
+        return userService.registerUser(user);
     }
-    
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginUser) {
 
-        User user = userRepository.findByEmail(loginUser.getEmail());
-
-        if (user != null && user.getPassword().equals(loginUser.getPassword())) {
-            return ResponseEntity.ok(user);
-        }
-
-        return ResponseEntity.status(401).body("Invalid credentials");
-    }
-    
+    // GET ALL USERS
     @GetMapping("/all")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAll() {
+        return userService.getAllUsers();
     }
-    
+
+    // GET USER BY ID
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userRepository.findById(id).orElse(null);
+    public User getById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
-    
+
+    // UPDATE USER
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User newUser) {
-
-        User user = userRepository.findById(id).orElse(null);
-
-        if (user != null) {
-            user.setName(newUser.getName());
-            user.setEmail(newUser.getEmail());
-            user.setPassword(newUser.getPassword());
-            return userRepository.save(user);
-        }
-
-        return null;
+    public User update(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
+
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String softDelete(@PathVariable Long id) {
 
-        User user = userRepository.findById(id).orElse(null);
+        userService.softDeleteUser(id);
 
-        if (user != null) {
-            user.setActive(false); // deactivate
-            userRepository.save(user);
-        }
-
-        return "User deactivated successfully";
+        return "User Soft Deleted";
+    }
+    // CHANGE STATUS (ACTIVE/INACTIVE)
+    @PutMapping("/{id}/status")
+    public User changeStatus(@PathVariable Long id,
+                             @RequestParam boolean isActive) {
+        return userService.changeStatus(id, isActive);
     }
 }

@@ -1,72 +1,38 @@
 package com.jobportal.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "applications")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Application {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private Long jobId;
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
 
     private String resume;
 
-    private String status;
+    private String status = "PENDING";
 
-    public Application() {
-    }
-
-    public Application(Long id, Long userId, Long jobId,
-                       String resume, String status) {
+    public Application(Long id, User user, Job job, String resume, String status) {
         this.id = id;
-        this.userId = userId;
-        this.jobId = jobId;
+        this.user = user;
+        this.job = job;
         this.resume = resume;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getResume() {
-        return resume;
-    }
-
-    public void setResume(String resume) {
-        this.resume = resume;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        this.status = (status != null) ? status : "PENDING";
     }
 }

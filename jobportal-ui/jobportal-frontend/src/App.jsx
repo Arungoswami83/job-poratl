@@ -1,61 +1,54 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminNavbar from "./components/AdminNavbar";
+import Home from "./pages/user/Home";
+import Jobs from "./pages/user/Jobs";
+import UploadResume from "./pages/user/UploadResume";
+import ApplyJob from "./pages/user/ApplyJob";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Profile from "./pages/user/Profile";
+import AddJob from "./pages/admin/AddJob";
+import EditJob from "./pages/admin/EditJob";
+import Users from "./pages/admin/Users";
+import Dashboard from "./pages/admin/Dashboard";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Jobs from "./pages/Jobs";
-import AddJob from "./pages/AddJob";
-import UploadResume from "./pages/UploadResume";
-import Users from "./pages/Users";
-import EditJob from "./pages/EditJob";
+function Layout() {
 
-function App() {
+  const location = useLocation();
+
+  // Admin pages detect
+  const isAdminPage = location.pathname.startsWith("/admin");
 
   return (
-
-    <BrowserRouter>
-
-      <Navbar />
-
+    <>
+      {/* User Navbar only */}
+{
+    isAdminPage
+        ? <AdminNavbar />
+        : <Navbar />
+}
       <Routes>
 
+        {/* USER ROUTES */}
+
         <Route path="/" element={<Home />} />
-
-        <Route path="/login" element={<Login />} />
-
-        <Route path="/register" element={<Register />} />
 
         <Route path="/jobs" element={<Jobs />} />
 
         <Route
-          path="/add-job"
-          element={
-            <ProtectedRoute adminOnly={true}>
-              <AddJob />
-            </ProtectedRoute>
-          }
-        />
+    path="/apply/:id"
+    element={
+        <ProtectedRoute>
+            <ApplyJob />
+        </ProtectedRoute>
+    }
+/>
 
-        <Route
-          path="/users"
-          element={
-            <ProtectedRoute adminOnly={true}>
-              <Users />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/edit-job/:id"
-          element={
-            <ProtectedRoute adminOnly={true}>
-              <EditJob />
-            </ProtectedRoute>
-          }
-        />
+<Route path="/profile" element={<Profile />} />
 
         <Route
           path="/upload-resume"
@@ -66,8 +59,62 @@ function App() {
           }
         />
 
+        {/* AUTH ROUTES */}
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+        {/* ADMIN ROUTES */}
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/add-job"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <AddJob />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/edit-job/:id"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <EditJob />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
 
+      {/* User Footer only */}
+      {!isAdminPage && <Footer />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Layout />
     </BrowserRouter>
   );
 }

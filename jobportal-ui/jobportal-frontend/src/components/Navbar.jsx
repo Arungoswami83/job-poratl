@@ -4,91 +4,92 @@ function Navbar() {
 
     const navigate = useNavigate();
 
-    // DIRECT READ
-    const user =
-        JSON.parse(localStorage.getItem("user")) ||
-        JSON.parse(localStorage.getItem("loggedInUser"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    const role = user?.role?.trim().toUpperCase();
-
-    const handleLogout = () => {
-
+    // LOGOUT
+    const logout = () => {
         localStorage.removeItem("user");
-        localStorage.removeItem("loggedInUser");
-
-        alert("Logout Successful");
-
-        window.location.href = "/login";
+        navigate("/login");
     };
 
     return (
-
-        <div className="bg-black text-white px-6 py-4 flex justify-between items-center">
+        <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white px-10 py-4 flex justify-between items-center shadow-lg">
 
             {/* LOGO */}
-            <h1 className="text-2xl font-bold">
-                JobPortal
-            </h1>
+            <Link to="/" className="text-2xl font-bold tracking-wide">
+                Job Portal
+            </Link>
 
-            <div className="flex gap-5 items-center">
+            {/* MENU */}
+            <div className="flex gap-6 items-center text-sm">
 
-                <Link to="/">Home</Link>
+                <Link to="/" className="hover:text-blue-300 transition">
+                    Home
+                </Link>
 
-                {/* USER */}
-                {role === "USER" && (
-                    <>
-                        <Link to="/jobs">Apply Jobs</Link>
+                <Link to="/jobs" className="hover:text-blue-300 transition">
+                    Jobs
+                </Link>
 
-                        <Link to="/upload-resume">
-                            Upload Resume
-                        </Link>
-                    </>
+                {/* USER ONLY */}
+                {user?.role === "USER" && (
+                    <Link to="/upload-resume" className="hover:text-blue-300 transition">
+                        Upload Resume
+                    </Link>
                 )}
 
-                {/* ADMIN */}
-                {role === "ADMIN" && (
-                    <>
-                        <Link to="/add-job">
-                            Add Job
-                        </Link>
-
-                        <Link to="/jobs">
-                            Manage Jobs
-                        </Link>
-
-                        <Link to="/users">
-                            User List
-                        </Link>
-                    </>
+                {/* ADMIN ONLY */}
+                {user?.role === "ADMIN" && (
+                    <Link to="/admin/dashboard" className="hover:text-blue-300 transition">
+                        Dashboard
+                    </Link>
                 )}
 
-                {/* AUTH */}
-                {!user ? (
-                    <>
-                        <Link to="/login">Login</Link>
+                {/* 👤 USER INFO */}
+                {user && (
+                    <div className="bg-white/10 px-3 py-1 rounded-full text-xs border border-white/10">
+                        {user.name}
+                    </div>
+                )}
 
-                        <Link to="/register">
-                            Register
-                        </Link>
-                    </>
+                {user && (
+    <Link to="/profile" className="hover:text-blue-300 transition">
+        Profile
+    </Link>
+)}
+
+                {/* 🛡 ROLE BADGE */}
+                {user && (
+                    <div className={`px-3 py-1 rounded-full text-xs font-semibold border
+                        ${user.role === "ADMIN"
+                            ? "bg-red-500/20 text-red-300 border-red-400/30"
+                            : "bg-green-500/20 text-green-300 border-green-400/30"
+                        }`}
+                    >
+                        {user.role === "ADMIN" ? "🛡 ADMIN" : "👤 USER"}
+                    </div>
+                )}
+
+                {/* LOGIN / LOGOUT */}
+                {user ? (
+                    <button
+                        onClick={logout}
+                        className="bg-red-500 hover:bg-red-600 px-4 py-1.5 rounded-full transition shadow-md"
+                    >
+                        Logout
+                    </button>
                 ) : (
-                    <>
-                        <span className="text-yellow-400">
-                            {user.name}
-                        </span>
-
-                        <button
-                            onClick={handleLogout}
-                            className="bg-red-500 px-3 py-1 rounded"
-                        >
-                            Logout
-                        </button>
-                    </>
+                    <Link
+                        to="/login"
+                        className="bg-blue-600 hover:bg-blue-700 px-4 py-1.5 rounded-full transition shadow-md"
+                    >
+                        Login
+                    </Link>
                 )}
 
             </div>
 
-        </div>
+        </nav>
     );
 }
 

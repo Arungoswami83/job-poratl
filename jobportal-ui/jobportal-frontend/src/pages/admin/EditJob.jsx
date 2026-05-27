@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditJob() {
 
     const { id } = useParams();
+
     const navigate = useNavigate();
 
     const [job, setJob] = useState({
+
         title: "",
         company: "",
         location: "",
@@ -15,37 +17,38 @@ function EditJob() {
         description: ""
     });
 
-    // ✅ FIX: logs after state
-    useEffect(() => {
-        console.log("JOB ID:", id);
-        console.log("CURRENT JOB STATE:", job);
-    }, [id, job]);
-
-    useEffect(() => {
-        fetchJob();
-    }, [id]);
-
+    // FETCH JOB BY ID
     const fetchJob = async () => {
+
         try {
-            const res = await axios.get(`http://localhost:8080/jobs/${id}`);
+
+            const res = await axios.get(
+                `http://localhost:8080/jobs/${id}`
+            );
+
             setJob(res.data);
-        } catch (err) {
-            console.log(err);
+
+        } catch (error) {
+
+            console.log(error);
         }
     };
 
+    // HANDLE INPUT
     const handleChange = (e) => {
+
         setJob({
             ...job,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleUpdate = async (e) => {
+    // UPDATE JOB
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         try {
-            console.log("UPDATING JOB:", job);
 
             await axios.put(
                 `http://localhost:8080/jobs/${id}`,
@@ -53,51 +56,70 @@ function EditJob() {
             );
 
             alert("Job Updated Successfully");
+
             navigate("/jobs");
 
-        } catch (err) {
-            console.log("UPDATE ERROR:", err);
+        } catch (error) {
+
+            console.log(error);
+
             alert("Update Failed");
         }
     };
 
+    useEffect(() => {
+
+        fetchJob();
+
+    }, []);
+
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
 
-            <form onSubmit={handleUpdate} className="bg-white p-6 rounded shadow w-96">
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center">
 
-                <h2 className="text-xl font-bold mb-4">Edit Job</h2>
+            <form
+                onSubmit={handleSubmit}
+                className="bg-white p-8 rounded-xl shadow w-[500px]"
+            >
+
+                <h1 className="text-3xl font-bold mb-6 text-center">
+                    Edit Job
+                </h1>
 
                 <input
+                    type="text"
                     name="title"
                     value={job.title}
                     onChange={handleChange}
-                    placeholder="Title"
-                    className="w-full border p-2 mb-2"
+                    placeholder="Job Title"
+                    className="w-full border p-3 mb-4 rounded"
                 />
 
                 <input
+                    type="text"
                     name="company"
                     value={job.company}
                     onChange={handleChange}
                     placeholder="Company"
-                    className="w-full border p-2 mb-2"
+                    className="w-full border p-3 mb-4 rounded"
                 />
 
                 <input
+                    type="text"
                     name="location"
                     value={job.location}
                     onChange={handleChange}
                     placeholder="Location"
-                    className="w-full border p-2 mb-2"
+                    className="w-full border p-3 mb-4 rounded"
                 />
 
                 <input
+                    type="text"
                     name="salary"
                     value={job.salary}
                     onChange={handleChange}
                     placeholder="Salary"
-                    className="w-full border p-2 mb-2"
+                    className="w-full border p-3 mb-4 rounded"
                 />
 
                 <textarea
@@ -105,10 +127,13 @@ function EditJob() {
                     value={job.description}
                     onChange={handleChange}
                     placeholder="Description"
-                    className="w-full border p-2 mb-2"
+                    className="w-full border p-3 mb-4 rounded h-32"
                 />
 
-                <button className="bg-blue-500 text-white px-4 py-2 w-full">
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700"
+                >
                     Update Job
                 </button>
 

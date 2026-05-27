@@ -1,14 +1,12 @@
 package com.jobportal.controller;
 
 import com.jobportal.entity.Application;
-import com.jobportal.repository.ApplicationRepository;
+import com.jobportal.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.io.File;
-import java.io.IOException;
 
-import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/applications")
@@ -16,34 +14,41 @@ import java.util.List;
 public class ApplicationController {
 
     @Autowired
-    private ApplicationRepository applicationRepository;
+    private ApplicationService applicationService;
 
-    // Apply Job
+    // APPLY JOB
     @PostMapping("/apply")
-    public Application applyJob(@RequestBody Application application) {
+    public Application applyJob(@RequestBody Map<String, Object> request) {
 
-        application.setStatus("PENDING");
+        Long userId = Long.valueOf(request.get("userId").toString());
+        Long jobId = Long.valueOf(request.get("jobId").toString());
+        String resume = request.get("resume").toString();
 
-        return applicationRepository.save(application);
+        return applicationService.applyJob(userId, jobId, resume);
     }
 
-    // Get All Applications
-    @GetMapping
-    public List<Application> getAllApplications() {
-
-        return applicationRepository.findAll();
+    // GET ALL APPLICATIONS
+    @GetMapping("/all")
+    public List<Application> getAll() {
+        return applicationService.getAllApplications();
     }
-    @PostMapping("/upload")
-    public String uploadResume(
-            @RequestParam("file") MultipartFile file
-    ) throws IOException {
 
-        String path = "uploads/";
-
-        file.transferTo(
-                new File(path + file.getOriginalFilename())
-        );
-
-        return "Resume Uploaded Successfully";
+    // GET BY USER
+    @GetMapping("/user/{userId}")
+    public List<Application> getByUser(@PathVariable Long userId) {
+        return applicationService.getApplicationsByUser(userId);
     }
-}	
+
+    // GET BY JOB
+    @GetMapping("/job/{jobId}")
+    public List<Application> getByJob(@PathVariable Long jobId) {
+        return applicationService.getApplicationsByJob(jobId);
+    }
+
+    // UPDATE STATUS (Admin)
+    @PutMapping("/{id}/status")
+    public Application updateStatus(@PathVariable Long id,
+                                    @RequestParam String status) {
+        return applicationService.updateStatus(id, status);
+    }
+}
