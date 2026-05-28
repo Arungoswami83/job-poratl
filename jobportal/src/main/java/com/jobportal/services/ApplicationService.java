@@ -1,11 +1,13 @@
 package com.jobportal.services;
 
 import com.jobportal.entity.Application;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public interface ApplicationService {
 
-    Application applyJob(Long userId, Long jobId, String resume);
+    Application applyJob(Long userId, Long jobId, MultipartFile resume);
 
     List<Application> getAllApplications();
 

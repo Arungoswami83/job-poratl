@@ -19,23 +19,32 @@ function Login() {
     };
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
 
         try {
-
             const res = await axios.post(
                 "http://localhost:8080/auth/login",
                 formData
             );
 
-            const user = res.data;
+            console.log("LOGIN RESPONSE:", res.data);
 
-            localStorage.setItem("user", JSON.stringify(user));
+            // 🔥 SAFE ID FETCH
+            const userId = res.data.id || res.data.user?.id;
+
+            if (!userId) {
+                alert("Login failed: userId not found in response");
+                return;
+            }
+
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("user", JSON.stringify(res.data));
 
             alert("Login Success");
 
-            if (user?.role === "ADMIN") {
+            const role = res.data.role || res.data.user?.role;
+
+            if (role === "ADMIN") {
                 navigate("/admin/dashboard");
             } else {
                 navigate("/");

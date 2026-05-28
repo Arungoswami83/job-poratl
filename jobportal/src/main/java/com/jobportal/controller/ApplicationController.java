@@ -4,7 +4,8 @@ import com.jobportal.entity.Application;
 import com.jobportal.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
@@ -16,14 +17,12 @@ public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
 
-    // APPLY JOB
-    @PostMapping("/apply")
-    public Application applyJob(@RequestBody Map<String, Object> request) {
-
-        Long userId = Long.valueOf(request.get("userId").toString());
-        Long jobId = Long.valueOf(request.get("jobId").toString());
-        String resume = request.get("resume").toString();
-
+    @PostMapping(value = "/apply", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Application applyJob(
+            @RequestParam("userId") Long userId,
+            @RequestParam("jobId") Long jobId,
+            @RequestParam("resume") MultipartFile resume
+    ) {
         return applicationService.applyJob(userId, jobId, resume);
     }
 
