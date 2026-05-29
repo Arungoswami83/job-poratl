@@ -36,12 +36,7 @@ public class User {
     private Role role = Role.USER;
 
     @Column(name = "is_active")
-    private boolean active;    public User(Long id, String name, String email, String password, Role role, boolean isActive) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.active = isActive;
-    }
+    private Boolean isActive = true;
+
+  
 }

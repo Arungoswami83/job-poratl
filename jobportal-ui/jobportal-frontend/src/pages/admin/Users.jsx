@@ -106,13 +106,13 @@ function Users() {
 
                                 <td className="p-4">
 
-                                    {
-                                        user.active
-                                            ? "Active"
-                                            : "Inactive"
-                                    }
+    {
+        user.isActive
+            ? "Active"
+            : "Inactive"
+    }
 
-                                </td>
+</td>
 
                                 <td className="p-4">
 
