@@ -8,6 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/applications")
@@ -49,5 +55,25 @@ public class ApplicationController {
     public Application updateStatus(@PathVariable Long id,
                                     @RequestParam String status) {
         return applicationService.updateStatus(id, status);
+    }
+    
+    @GetMapping("/{id}/resume")
+    public ResponseEntity<Resource> downloadResume(@PathVariable Long id) {
+
+        Application app = applicationService.getApplicationById(id);
+
+        String filePath = System.getProperty("user.dir") + "/uploads/" + app.getResume();
+        Path path = Paths.get(filePath);
+
+        Resource resource = new FileSystemResource(path);
+
+        if (!resource.exists()) {
+            throw new RuntimeException("File not found");
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + path.getFileName().toString() + "\"")
+                .body(resource);
     }
 }

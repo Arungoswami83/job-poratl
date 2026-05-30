@@ -30,6 +30,9 @@ function Navbar() {
                 <Link to="/jobs" className="hover:text-blue-300 transition">
                     Jobs
                 </Link>
+                <Link to="/my-applications">
+    My Applications
+</Link>
 
                 {/* USER ONLY */}
                 {user?.role === "USER" && (

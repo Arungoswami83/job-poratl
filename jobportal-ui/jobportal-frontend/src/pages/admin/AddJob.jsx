@@ -7,7 +7,6 @@ function AddJob() {
     const navigate = useNavigate();
 
     const [job, setJob] = useState({
-
         title: "",
         company: "",
         location: "",
@@ -15,16 +14,13 @@ function AddJob() {
         description: ""
     });
 
-    // HANDLE INPUT
     const handleChange = (e) => {
-
         setJob({
             ...job,
             [e.target.name]: e.target.value
         });
     };
 
-    // ADD JOB
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -37,79 +33,98 @@ function AddJob() {
             );
 
             alert("Job Added Successfully");
-
             navigate("/jobs");
 
         } catch (error) {
 
             console.log(error);
-
             alert("Failed To Add Job");
         }
     };
 
     return (
 
-        <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
 
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-8 rounded-xl shadow w-[500px]"
+                className="w-full max-w-xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl shadow-2xl text-white"
             >
 
-                <h1 className="text-3xl font-bold mb-6 text-center">
-                    Add Job
+                <h1 className="text-3xl font-bold text-center mb-8">
+                    Add New Job 💼
                 </h1>
 
+                {/* Job Title */}
+                <label className="text-sm text-slate-300">
+                    Job Title
+                </label>
                 <input
                     type="text"
                     name="title"
-                    placeholder="Job Title"
+                    placeholder="Enter Job Title"
                     value={job.title}
                     onChange={handleChange}
-                    className="w-full border p-3 mb-4 rounded"
+                    className="w-full mt-1 mb-4 px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none focus:border-blue-500 text-white placeholder-slate-400"
                     required
                 />
 
+                {/* Company Name */}
+                <label className="text-sm text-slate-300">
+                    Company Name
+                </label>
                 <input
                     type="text"
                     name="company"
-                    placeholder="Company Name"
+                    placeholder="Enter Company Name"
                     value={job.company}
                     onChange={handleChange}
-                    className="w-full border p-3 mb-4 rounded"
+                    className="w-full mt-1 mb-4 px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none focus:border-blue-500 text-white placeholder-slate-400"
                     required
                 />
 
+                {/* Location */}
+                <label className="text-sm text-slate-300">
+                    Location
+                </label>
                 <input
                     type="text"
                     name="location"
-                    placeholder="Location"
+                    placeholder="Enter Location"
                     value={job.location}
                     onChange={handleChange}
-                    className="w-full border p-3 mb-4 rounded"
+                    className="w-full mt-1 mb-4 px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none focus:border-blue-500 text-white placeholder-slate-400"
                 />
 
+                {/* Salary */}
+                <label className="text-sm text-slate-300">
+                    Salary
+                </label>
                 <input
                     type="text"
                     name="salary"
-                    placeholder="Salary"
+                    placeholder="Enter Salary"
                     value={job.salary}
                     onChange={handleChange}
-                    className="w-full border p-3 mb-4 rounded"
+                    className="w-full mt-1 mb-4 px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none focus:border-blue-500 text-white placeholder-slate-400"
                 />
 
+                {/* Description */}
+                <label className="text-sm text-slate-300">
+                    Job Description
+                </label>
                 <textarea
                     name="description"
-                    placeholder="Job Description"
+                    placeholder="Enter Job Description"
                     value={job.description}
                     onChange={handleChange}
-                    className="w-full border p-3 mb-4 rounded h-32"
+                    className="w-full mt-1 mb-6 px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none focus:border-blue-500 text-white placeholder-slate-400 h-32 resize-none"
                 />
 
+                {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700"
+                    className="w-full bg-blue-600 hover:bg-blue-700 transition py-3 rounded-lg font-semibold shadow-lg"
                 >
                     Add Job
                 </button>

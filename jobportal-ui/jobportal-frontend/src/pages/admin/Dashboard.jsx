@@ -50,64 +50,90 @@ axios.get("http://localhost:8080/dashboard")
 
             </div>
 
-            {/* CARDS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* USERS CARD */}
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
-                    <h2 className="text-2xl font-bold text-blue-400">
-                        Users
-                    </h2>
-                    <p className="text-slate-300 mt-2">
-                        Manage all registered users
-                    </p>
-                    <p className="text-3xl font-bold text-white mt-4">
-                        {data.users}
-                    </p>
-                    <Link
-                        to="/admin/users"
-                        className="inline-block mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full transition shadow-md"
-                    >
-                        View Users
-                    </Link>
-                </div>
+           {/* CARDS */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-                {/* ADD JOB CARD */}
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
-                    <h2 className="text-2xl font-bold text-green-400">
-                        Add Job
-                    </h2>
-                    <p className="text-slate-300 mt-2">
-                        Create new job postings
-                    </p>
-                    <Link
-                        to="/admin/add-job"
-                        className="inline-block mt-17 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full transition shadow-md"
-                    >
-                        Add Job
-                    </Link>
-                </div>
+    {/* USERS CARD */}
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h2 className="text-2xl font-bold text-blue-400">
+            Users
+        </h2>
 
-                {/* JOBS CARD */}
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
-                    <h2 className="text-2xl font-bold text-purple-400">
-                        Jobs
-                    </h2>
-                    <p className="text-slate-300 mt-2">
-                        Manage all job postings
-                    </p>
-                    <p className="text-3xl font-bold text-white mt-4">
-                        {data.jobs}
-                    </p>
-                    <Link
-                        to="/jobs"
-                        className="inline-block mt-5 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full transition shadow-md"
-                    >
-                        View Jobs
-                    </Link>
+        <p className="text-slate-300 mt-2">
+            Manage all registered users
+        </p>
 
-                </div>
+        <p className="text-3xl font-bold text-white mt-4">
+            {data.users}
+        </p>
 
-            </div>
+        <Link
+            to="/admin/users"
+            className="inline-block mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full transition shadow-md"
+        >
+            View Users
+        </Link>
+    </div>
+
+    {/* ADD JOB CARD */}
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h2 className="text-2xl font-bold text-green-400">
+            Add Job
+        </h2>
+
+        <p className="text-slate-300 mt-2">
+            Create new job postings
+        </p>
+
+        <Link
+            to="/admin/add-job"
+            className="inline-block mt-16 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full transition shadow-md"
+        >
+            Add Job
+        </Link>
+    </div>
+
+    {/* JOBS CARD */}
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h2 className="text-2xl font-bold text-purple-400">
+            Jobs
+        </h2>
+
+        <p className="text-slate-300 mt-2">
+            Manage all job postings
+        </p>
+
+        <p className="text-3xl font-bold text-white mt-4">
+            {data.jobs}
+        </p>
+
+        <Link
+            to="/jobs"
+            className="inline-block mt-5 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full transition shadow-md"
+        >
+            View Jobs
+        </Link>
+    </div>
+
+    {/* APPLICATIONS CARD */}
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h2 className="text-2xl font-bold text-orange-400">
+            Applications
+        </h2>
+
+        <p className="text-slate-300 mt-2">
+            Manage job applications and status
+        </p>
+
+        <Link
+            to="/manage-applications"
+            className="inline-block mt-16 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 rounded-full transition shadow-md"
+        >
+            Manage Applications
+        </Link>
+    </div>
+
+</div>
 
         </div>
     );

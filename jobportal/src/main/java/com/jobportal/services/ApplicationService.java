@@ -16,4 +16,7 @@ public interface ApplicationService {
     List<Application> getApplicationsByJob(Long jobId);
 
     Application updateStatus(Long applicationId, String status);
+    
+    Application getApplicationById(Long id);   
+
 }

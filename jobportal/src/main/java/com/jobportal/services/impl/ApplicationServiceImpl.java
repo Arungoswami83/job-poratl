@@ -34,7 +34,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         try {
 
-            String uploadPath = System.getProperty("user.dir") + "/uploads/";
+            String uploadPath = System.getProperty("user.dir")
+                    + File.separator + "uploads" + File.separator;
 
             File dir = new File(uploadPath);
 
@@ -42,7 +43,8 @@ public class ApplicationServiceImpl implements ApplicationService {
                 dir.mkdirs();
             }
 
-            String fileName = System.currentTimeMillis() + "_" + resume.getOriginalFilename();
+            String fileName =
+                    System.currentTimeMillis() + "_" + resume.getOriginalFilename();
 
             File saveFile = new File(uploadPath + fileName);
 
@@ -52,7 +54,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
             app.setUser(user);
             app.setJob(job);
-            app.setResume(saveFile.getAbsolutePath());
+            app.setResume(fileName);
             app.setStatus("PENDING");
 
             return applicationRepository.save(app);
@@ -61,7 +63,9 @@ public class ApplicationServiceImpl implements ApplicationService {
             e.printStackTrace();
             throw new RuntimeException("Resume upload failed");
         }
-    }    @Override
+    }
+    
+    @Override
     public List<Application> getAllApplications() {
         return applicationRepository.findAll();
     }
@@ -84,5 +88,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         app.setStatus(status);
         return applicationRepository.save(app);
+    }
+    @Override
+    public Application getApplicationById(Long id) {
+        return applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Application not found with id: " + id));
     }
 }

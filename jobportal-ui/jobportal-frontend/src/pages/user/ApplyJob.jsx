@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
+import { useNavigate, useParams } from "react-router-dom";
 function ApplyJob() {
-
+    const navigate = useNavigate();
+   
     const { id } = useParams();
 
     const [resume, setResume] = useState(null);
@@ -33,6 +33,7 @@ function ApplyJob() {
             );
 
             alert("Applied Successfully 🚀");
+            navigate("/jobs");
 
         } catch (error) {
 

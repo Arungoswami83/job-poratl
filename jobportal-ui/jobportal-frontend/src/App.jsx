@@ -15,7 +15,8 @@ import AddJob from "./pages/admin/AddJob";
 import EditJob from "./pages/admin/EditJob";
 import Users from "./pages/admin/Users";
 import Dashboard from "./pages/admin/Dashboard";
-
+import ManageApplications from "./pages/admin/ManageApplications";
+import MyApplications from "./pages/user/MyApplications";
 function Layout() {
 
   const location = useLocation();
@@ -58,6 +59,10 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+        <Route
+    path="/my-applications"
+    element={<MyApplications />}
+/>
 
         {/* AUTH ROUTES */}
 
@@ -75,7 +80,10 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-
+          <Route
+    path="/manage-applications"
+    element={<ManageApplications />}
+/>
         <Route
           path="/admin/add-job"
           element={

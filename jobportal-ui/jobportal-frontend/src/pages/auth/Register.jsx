@@ -99,7 +99,6 @@ function Register() {
                     className="w-full mb-5 px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 outline-none focus:border-green-500"
                 >
                     <option className="text-black" value="USER">USER</option>
-                    <option className="text-black" value="ADMIN">ADMIN</option>
                 </select>
 
                 {/* BUTTON */}
