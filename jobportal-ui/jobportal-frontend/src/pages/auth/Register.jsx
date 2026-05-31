@@ -92,14 +92,20 @@ function Register() {
                 />
 
                 {/* ROLE */}
-                <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    className="w-full mb-5 px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 outline-none focus:border-green-500"
-                >
-                    <option className="text-black" value="USER">USER</option>
-                </select>
+            <select
+    name="role"
+    value={formData.role}
+    onChange={handleChange}
+    className="w-full mb-5 px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 outline-none focus:border-green-500"
+>
+    <option className="text-black" value="USER">
+        Job Seeker
+    </option>
+
+    <option className="text-black" value="EMPLOYER">
+        Employer / Company
+    </option>
+</select>
 
                 {/* BUTTON */}
                 <button

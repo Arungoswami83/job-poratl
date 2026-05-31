@@ -33,7 +33,7 @@ function ApplyJob() {
             );
 
             alert("Applied Successfully 🚀");
-            navigate("/jobs");
+            navigate("/my-applications");
 
         } catch (error) {
 

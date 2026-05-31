@@ -1,6 +1,7 @@
 package com.jobportal.repository;
 
 import com.jobportal.entity.User;
+import com.jobportal.enums.Role;
 
 import java.util.Optional;
 
@@ -12,5 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     User findByEmailAndPassword(String email,
             String password);
+    
+    long countByRole(Role role);
+
 
 }

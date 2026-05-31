@@ -30,16 +30,24 @@ function Navbar() {
                 <Link to="/jobs" className="hover:text-blue-300 transition">
                     Jobs
                 </Link>
-                <Link to="/my-applications">
-    My Applications
-</Link>
+               
 
                 {/* USER ONLY */}
                 {user?.role === "USER" && (
                     <Link to="/upload-resume" className="hover:text-blue-300 transition">
                         Upload Resume
                     </Link>
+                    
                 )}
+                {/* USER ONLY */}
+{user?.role === "USER" && (
+    <Link
+        to="/my-applications"
+        className="hover:text-blue-300 transition"
+    >
+        My Applications
+    </Link>
+)}
 
                 {/* ADMIN ONLY */}
                 {user?.role === "ADMIN" && (
